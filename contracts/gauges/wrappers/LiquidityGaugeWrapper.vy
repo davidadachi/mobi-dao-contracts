@@ -1,7 +1,7 @@
 # @version 0.2.8
 """
 @title Tokenized Liquidity Gauge Wrapper
-@author Curve Finance
+@author Mobius Finance
 @license MIT
 @notice Allows tokenized deposits and claiming from `LiquidityGauge`
 """

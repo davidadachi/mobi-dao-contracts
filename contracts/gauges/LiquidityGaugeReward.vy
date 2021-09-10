@@ -1,14 +1,14 @@
-# @version 0.2.4
+# @version 0.2.8
 """
 @title Staking Liquidity Gauge
-@author Curve Finance
+@author Mobius Finance
 @license MIT
 @notice Simultaneously stakes using Synthetix (== YFI) rewards contract
 """
 
 from vyper.interfaces import ERC20
 
-interface CRV20:
+interface MOBI20:
     def future_epoch_time_write() -> uint256: nonpayable
     def rate() -> uint256: view
 
@@ -30,7 +30,7 @@ interface VotingEscrow:
     def user_point_epoch(addr: address) -> uint256: view
     def user_point_history__ts(addr: address, epoch: uint256) -> uint256: view
 
-interface CurveRewards:
+interface MobiusRewards:
     def stake(amount: uint256): nonpayable
     def withdraw(amount: uint256): nonpayable
     def getReward(): nonpayable
@@ -132,8 +132,8 @@ def __init__(lp_addr: address, _minter: address, _reward_contract: address, _rew
     self.controller = controller_addr
     self.voting_escrow = Controller(controller_addr).voting_escrow()
     self.period_timestamp[0] = block.timestamp
-    self.inflation_rate = CRV20(crv_addr).rate()
-    self.future_epoch_time = CRV20(crv_addr).future_epoch_time_write()
+    self.inflation_rate = MOBI20(crv_addr).rate()
+    self.future_epoch_time = MOBI20(crv_addr).future_epoch_time_write()
     self.reward_contract = _reward_contract
     assert ERC20(lp_addr).approve(_reward_contract, MAX_UINT256)
     self.rewarded_token = _rewarded_token
@@ -144,9 +144,9 @@ def __init__(lp_addr: address, _minter: address, _reward_contract: address, _rew
 @internal
 def _update_liquidity_limit(addr: address, l: uint256, L: uint256):
     """
-    @notice Calculate limits which depend on the amount of CRV token per-user.
+    @notice Calculate limits which depend on the amount of MOBI token per-user.
             Effectively it calculates working balances to apply amplification
-            of CRV production by CRV
+            of MOBI production by MOBI
     @param addr User address
     @param l User's amount of liquidity (LP tokens)
     @param L Total amount of liquidity (LP tokens)
@@ -177,7 +177,7 @@ def _checkpoint_rewards(addr: address, claim_rewards: bool):
     d_reward: uint256 = 0
     if claim_rewards:
         d_reward = ERC20(_rewarded_token).balanceOf(self)
-        CurveRewards(self.reward_contract).getReward()
+        MobiusRewards(self.reward_contract).getReward()
         d_reward = ERC20(_rewarded_token).balanceOf(self) - d_reward
 
     user_balance: uint256 = self.balanceOf[addr]
@@ -206,8 +206,8 @@ def _checkpoint(addr: address, claim_rewards: bool):
     new_rate: uint256 = rate
     prev_future_epoch: uint256 = self.future_epoch_time
     if prev_future_epoch >= _period_time:
-        self.future_epoch_time = CRV20(_token).future_epoch_time_write()
-        new_rate = CRV20(_token).rate()
+        self.future_epoch_time = MOBI20(_token).future_epoch_time_write()
+        new_rate = MOBI20(_token).rate()
         self.inflation_rate = new_rate
     Controller(_controller).checkpoint_gauge(self)
 
@@ -295,7 +295,7 @@ def claimable_reward(addr: address) -> uint256:
     @param addr Account to get reward amount for
     @return uint256 Claimable reward token amount
     """
-    d_reward: uint256 = CurveRewards(self.reward_contract).earned(self)
+    d_reward: uint256 = MobiusRewards(self.reward_contract).earned(self)
 
     user_balance: uint256 = self.balanceOf[addr]
     total_balance: uint256 = self.totalSupply
@@ -360,7 +360,7 @@ def deposit(_value: uint256, addr: address = msg.sender):
         self._update_liquidity_limit(addr, _balance, _supply)
 
         assert ERC20(self.lp_token).transferFrom(msg.sender, self, _value)
-        CurveRewards(self.reward_contract).stake(_value)
+        MobiusRewards(self.reward_contract).stake(_value)
 
     log Deposit(addr, _value)
 
@@ -382,7 +382,7 @@ def withdraw(_value: uint256, claim_rewards: bool = True):
     self._update_liquidity_limit(msg.sender, _balance, _supply)
 
     if _value > 0:
-        CurveRewards(self.reward_contract).withdraw(_value)
+        MobiusRewards(self.reward_contract).withdraw(_value)
         assert ERC20(self.lp_token).transfer(msg.sender, _value)
 
     log Withdraw(msg.sender, _value)
@@ -436,7 +436,7 @@ def apply_transfer_ownership():
 def toggle_external_rewards_claim(val: bool):
     """
     @notice Switch claiming rewards on/off. 
-            This is to prevent a malicious rewards contract from preventing CRV claiming
+            This is to prevent a malicious rewards contract from preventing MOBI claiming
     """ 
     assert msg.sender == self.admin
     self.is_claiming_rewards = val

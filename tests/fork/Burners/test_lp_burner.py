@@ -11,7 +11,7 @@ def lp_burner(LPBurner, alice, receiver):
     yield LPBurner.deploy(receiver, alice, alice, {"from": alice})
 
 
-tokens = (("0x075b1bb99792c9E1041bA13afEf80C91a1e70fB3", "sbtcCRV"),)
+tokens = (("0x075b1bb99792c9E1041bA13afEf80C91a1e70fB3", "sbtcMOBI"),)
 
 
 @pytest.mark.parametrize("token", [i[0] for i in tokens], ids=[i[1] for i in tokens])

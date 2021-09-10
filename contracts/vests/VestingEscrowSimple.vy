@@ -1,9 +1,9 @@
-# @version 0.2.4
+# @version 0.2.8
 """
 @title Simple Vesting Escrow
-@author Curve Finance
+@author Mobius Finance
 @license MIT
-@notice Vests `ERC20CRV` tokens for a single address
+@notice Vests `ERC20MOBI` tokens for a single address
 @dev Intended to be deployed many times via `VotingEscrowFactory`
 """
 

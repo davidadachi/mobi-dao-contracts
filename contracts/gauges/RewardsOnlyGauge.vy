@@ -1,9 +1,9 @@
 # @version 0.2.12
 """
 @title Rewards-Only Gauge
-@author Curve Finance
+@author Mobius Finance
 @license MIT
-@notice Distribution of third-party rewards without CRV
+@notice Distribution of third-party rewards without MOBI
 """
 
 from vyper.interfaces import ERC20
@@ -82,7 +82,7 @@ def __init__( _admin: address, _lp_token: address):
     """
 
     symbol: String[26] = ERC20Extended(_lp_token).symbol()
-    self.name = concat("Curve.fi ", symbol, " RewardGauge Deposit")
+    self.name = concat("Mobius.fi ", symbol, " RewardGauge Deposit")
     self.symbol = concat(symbol, "-gauge")
 
     self.lp_token = _lp_token
@@ -175,7 +175,7 @@ def _checkpoint_rewards(_user: address, _total_supply: uint256, _claim: bool, _r
 @external
 def reward_contract() -> address:
     """
-    @notice Address of the reward contract providing non-CRV incentives for this gauge
+    @notice Address of the reward contract providing non-MOBI incentives for this gauge
     @dev Returns `ZERO_ADDRESS` if there is no reward contract active
     """
     return convert(self.reward_data % 2**160, address)

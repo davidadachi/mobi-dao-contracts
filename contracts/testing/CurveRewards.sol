@@ -9,7 +9,7 @@
 /___/ \_, //_//_/\__//_//_/\__/ \__//_/ /_\_\
      /___/
 
-* Synthetix: CurveRewards.sol
+* Synthetix: MobiusRewards.sol
 *
 * Docs: https://docs.synthetix.io/
 *
@@ -585,7 +585,7 @@ contract IRewardDistributionRecipient is Ownable {
     }
 }
 
-// File: contracts/CurveRewards.sol
+// File: contracts/MobiusRewards.sol
 
 
 
@@ -624,7 +624,7 @@ contract LPTokenWrapper {
     }
 }
 
-contract CurveRewards is LPTokenWrapper, IRewardDistributionRecipient {
+contract MobiusRewards is LPTokenWrapper, IRewardDistributionRecipient {
     IERC20 public snx;
     uint256 public constant DURATION = 7 days;
 

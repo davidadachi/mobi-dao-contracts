@@ -1,7 +1,7 @@
 # @version 0.2.8
 """
-@title Curve LiquidityGaugeV2 Ownerhip Proxy
-@author Curve Finance
+@title Mobius LiquidityGaugeV2 Ownerhip Proxy
+@author Mobius Finance
 @license MIT
 """
 
@@ -91,7 +91,7 @@ def accept_transfer_ownership(_gauge: address):
 def set_killed(_gauge: address, _is_killed: bool):
     """
     @notice Set the killed status for `_gauge`
-    @dev When killed, the gauge always yields a rate of 0 and so cannot mint CRV
+    @dev When killed, the gauge always yields a rate of 0 and so cannot mint MOBI
     @param _gauge Gauge address
     @param _is_killed Killed status to set
     """

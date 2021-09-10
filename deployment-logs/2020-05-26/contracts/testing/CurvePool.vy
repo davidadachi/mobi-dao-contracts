@@ -1,4 +1,4 @@
-# (c) Curve.Fi, 2020
+# (c) Mobius.Fi, 2020
 # Pool for two plain coins
 
 

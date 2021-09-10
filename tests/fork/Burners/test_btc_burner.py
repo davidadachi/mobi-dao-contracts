@@ -12,7 +12,7 @@ tokens = (
     ("0xfe18be6b3bd88a2d2a7f928d00292e7a9963cfc6", "sBTC"),
     ("0x0316EB71485b0Ab14103307bf65a021042c6d380", "hBTC"),
     ("0x8dAEBADE922dF735c38C80C7eBD708Af50815fAa", "tBTC"),
-    # ("0x075b1bb99792c9E1041bA13afEf80C91a1e70fB3", "sbtcCRV"),
+    # ("0x075b1bb99792c9E1041bA13afEf80C91a1e70fB3", "sbtcMOBI"),
 )
 
 

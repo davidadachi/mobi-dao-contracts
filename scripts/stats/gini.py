@@ -6,7 +6,7 @@ from brownie import web3
 START_BLOCK = 10647813 + 86400
 graph_url = "https://api.thegraph.com/subgraphs/name/pengiundev/curve-votingescrow3"
 query = {
-    "query": """query ($block: Int!, $first: Int!, $skip: Int!) {\n  userBalances(orderBy: weight, orderDirection: desc, first: $first, skip: $skip, block: {number: $block}) {\n    id\n    startTx\n    user\n    CRVLocked\n lock_start\n    unlock_time\n    weight\n    __typename\n  }\n}\n""",  # noqa
+    "query": """query ($block: Int!, $first: Int!, $skip: Int!) {\n  userBalances(orderBy: weight, orderDirection: desc, first: $first, skip: $skip, block: {number: $block}) {\n    id\n    startTx\n    user\n    MOBILocked\n lock_start\n    unlock_time\n    weight\n    __typename\n  }\n}\n""",  # noqa
     "variables": {"block": None, "first": 1000, "skip": 0},
 }
 
@@ -46,5 +46,5 @@ def main():
     pylab.plot(blocks, ginis)
     pylab.title("Gini coefficient")
     pylab.xlabel("Block number")
-    pylab.ylabel("veCRV Gini coefficient")
+    pylab.ylabel("veMOBI Gini coefficient")
     pylab.show()

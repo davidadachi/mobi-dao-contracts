@@ -66,7 +66,7 @@ def test_burn_swap(MintableTestToken, USDC, alice, receiver, burner, token, has_
     assert USDC.balanceOf(receiver) == 0
 
 
-def test_execute(MintableTestToken, ThreeCRV, alice, burner, receiver):
+def test_execute(MintableTestToken, ThreeMOBI, alice, burner, receiver):
     coins = [MintableTestToken(i[0]) for i in tripool]
     for coin in coins:
         amount = 10 ** coin.decimals()
@@ -79,6 +79,6 @@ def test_execute(MintableTestToken, ThreeCRV, alice, burner, receiver):
         assert coin.balanceOf(burner) == 0
         assert coin.balanceOf(receiver) == 0
 
-    assert ThreeCRV.balanceOf(alice) == 0
-    assert ThreeCRV.balanceOf(burner) == 0
-    assert ThreeCRV.balanceOf(receiver) > 0
+    assert ThreeMOBI.balanceOf(alice) == 0
+    assert ThreeMOBI.balanceOf(burner) == 0
+    assert ThreeMOBI.balanceOf(receiver) > 0

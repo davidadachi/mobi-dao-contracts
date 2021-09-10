@@ -5,10 +5,10 @@ import time
 
 from brownie import (
     ERC20,
-    ERC20CRV,
+    ERC20MOBI,
     ERC20LP,
-    CurvePool,
-    CurveRewards,
+    MobiusPool,
+    MobiusRewards,
     GaugeController,
     LiquidityGauge,
     LiquidityGaugeReward,
@@ -71,7 +71,7 @@ def deploy_erc20s_and_pool(deployer):
     )
     save_abi(lp_token, "lp_token")
     pool = repeat(
-        CurvePool.deploy,
+        MobiusPool.deploy,
         [coin_a, coin_b],
         lp_token,
         100,
@@ -135,7 +135,7 @@ def main():
     )
     save_abi(lp_token, "lp_token")
     pool = repeat(
-        CurvePool.deploy,
+        MobiusPool.deploy,
         [coin_a, coin_b],
         lp_token,
         100,
@@ -159,7 +159,7 @@ def main():
     )
 
     contract = repeat(
-        CurveRewards.deploy, lp_token, coin_a, {"from": accounts[0], "required_confs": CONFS}
+        MobiusRewards.deploy, lp_token, coin_a, {"from": accounts[0], "required_confs": CONFS}
     )
     repeat(
         contract.setRewardDistribution, accounts[0], {"from": accounts[0], "required_confs": CONFS}
@@ -181,16 +181,16 @@ def main():
     coin_a = coins[1]
 
     token = repeat(
-        ERC20CRV.deploy, "Curve DAO Token", "CRV", 18, {"from": deployer, "required_confs": CONFS}
+        ERC20MOBI.deploy, "Mobius DAO Token", "MOBI", 18, {"from": deployer, "required_confs": CONFS}
     )
     save_abi(token, "token_crv")
 
     escrow = repeat(
         VotingEscrow.deploy,
         token,
-        "Vote-escrowed CRV",
-        "veCRV",
-        "veCRV_0.99",
+        "Vote-escrowed MOBI",
+        "veMOBI",
+        "veMOBI_0.99",
         {"from": deployer, "required_confs": CONFS},
     )
     save_abi(escrow, "voting_escrow")
@@ -221,7 +221,7 @@ def main():
     save_abi(liquidity_gauge, "liquidity_gauge")
 
     contract = repeat(
-        CurveRewards.deploy, lp_token, coin_a, {"from": accounts[0], "required_confs": CONFS}
+        MobiusRewards.deploy, lp_token, coin_a, {"from": accounts[0], "required_confs": CONFS}
     )
     repeat(
         contract.setRewardDistribution, accounts[0], {"from": accounts[0], "required_confs": CONFS}

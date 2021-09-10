@@ -82,14 +82,14 @@ def receiver(accounts):
 
 
 @pytest.fixture(scope="module")
-def token(ERC20CRV, accounts):
-    yield ERC20CRV.deploy("Curve DAO Token", "CRV", 18, {"from": accounts[0]})
+def token(ERC20MOBI, accounts):
+    yield ERC20MOBI.deploy("Mobius DAO Token", "MOBI", 18, {"from": accounts[0]})
 
 
 @pytest.fixture(scope="module")
 def voting_escrow(VotingEscrow, accounts, token):
     yield VotingEscrow.deploy(
-        token, "Voting-escrowed CRV", "veCRV", "veCRV_0.99", {"from": accounts[0]}
+        token, "Voting-escrowed MOBI", "veMOBI", "veMOBI_0.99", {"from": accounts[0]}
     )
 
 
@@ -124,8 +124,8 @@ def coin_reward():
 
 
 @pytest.fixture(scope="module")
-def reward_contract(CurveRewards, mock_lp_token, accounts, coin_reward):
-    contract = CurveRewards.deploy(mock_lp_token, coin_reward, {"from": accounts[0]})
+def reward_contract(MobiusRewards, mock_lp_token, accounts, coin_reward):
+    contract = MobiusRewards.deploy(mock_lp_token, coin_reward, {"from": accounts[0]})
     contract.setRewardDistribution(accounts[0], {"from": accounts[0]})
     yield contract
 
@@ -283,13 +283,13 @@ def coin_c():
 
 
 @pytest.fixture(scope="module")
-def mock_lp_token(ERC20LP, accounts):  # Not using the actual Curve contract
-    yield ERC20LP.deploy("Curve LP token", "usdCrv", 18, 10 ** 9, {"from": accounts[0]})
+def mock_lp_token(ERC20LP, accounts):  # Not using the actual Mobius contract
+    yield ERC20LP.deploy("Mobius LP token", "usdCrv", 18, 10 ** 9, {"from": accounts[0]})
 
 
 @pytest.fixture(scope="module")
-def pool(CurvePool, accounts, mock_lp_token, coin_a, coin_b):
-    curve_pool = CurvePool.deploy(
+def pool(MobiusPool, accounts, mock_lp_token, coin_a, coin_b):
+    curve_pool = MobiusPool.deploy(
         [coin_a, coin_b], mock_lp_token, 100, 4 * 10 ** 6, {"from": accounts[0]}
     )
     mock_lp_token.set_minter(curve_pool, {"from": accounts[0]})
@@ -321,17 +321,17 @@ def crypto_project(pm):
 
 @pytest.fixture(scope="module")
 def crypto_lp_token(alice, crypto_project):
-    return crypto_project.CurveTokenV4.deploy("Mock Crypto LP Token", "crvMock", {"from": alice})
+    return crypto_project.MobiusTokenV4.deploy("Mock Crypto LP Token", "crvMock", {"from": alice})
 
 
 @pytest.fixture(scope="module")
 def crypto_math(alice, crypto_project):
-    return crypto_project.CurveCryptoMath3.deploy({"from": alice})
+    return crypto_project.MobiusCryptoMath3.deploy({"from": alice})
 
 
 @pytest.fixture(scope="module")
 def crypto_views(alice, crypto_project, crypto_math, crypto_coins):
-    source: str = crypto_project.CurveCryptoViews3._build["source"]
+    source: str = crypto_project.MobiusCryptoViews3._build["source"]
     for idx, coin in enumerate(crypto_coins):
         new_value = 10 ** (18 - coin.decimals())
         source = source.replace(f"1,#{idx}", f"{new_value},")
@@ -365,7 +365,7 @@ def crypto_pool(
         + [coin.address for coin in crypto_coins]
         + [f"{10 ** (18 - coin.decimals())}," for coin in crypto_coins]
     )
-    source = crypto_project.CurveCryptoSwap._build["source"]
+    source = crypto_project.MobiusCryptoSwap._build["source"]
     for k, v in zip(keys, values):
         if isinstance(k, int):
             k = convert.to_address(convert.to_bytes(k, "bytes20"))

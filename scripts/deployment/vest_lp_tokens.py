@@ -2,7 +2,7 @@ import json
 import threading
 from decimal import Decimal
 
-from brownie import ERC20CRV, VestingEscrow, accounts, history
+from brownie import ERC20MOBI, VestingEscrow, accounts, history
 
 from . import deployment_config as config
 
@@ -30,7 +30,7 @@ def live():
     with open(config.DEPLOYMENTS_JSON) as fp:
         deployments = json.load(fp)
 
-    vest_tokens(admin, funding_admins, deployments["ERC20CRV"], config.REQUIRED_CONFIRMATIONS)
+    vest_tokens(admin, funding_admins, deployments["ERC20MOBI"], config.REQUIRED_CONFIRMATIONS)
 
 
 def development():
@@ -41,7 +41,7 @@ def development():
     * Run the main deployment and distribution logic
     * Perform a sanity check to confirm balances and total supply are as expected
     """
-    token = ERC20CRV.deploy("Curve DAO Token", "CRV", 18, {"from": accounts[0]})
+    token = ERC20MOBI.deploy("Mobius DAO Token", "MOBI", 18, {"from": accounts[0]})
     vesting_escrow, vested_amounts = vest_tokens(accounts[0], accounts[1:5], token, 1)
     sanity_check(vesting_escrow, vested_amounts)
 
@@ -79,7 +79,7 @@ def vest_tokens(admin, funding_admins, token_address, confs):
     start_idx = len(history)
 
     # get token Contract object
-    token = ERC20CRV.at(token_address)
+    token = ERC20MOBI.at(token_address)
 
     # deploy vesting contract
     start_time = token.future_epoch_time_write.call()

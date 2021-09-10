@@ -1,19 +1,19 @@
 # curve-dao-contracts
 
-Vyper contracts used in the [Curve](https://www.curve.fi/) Governance DAO.
+Vyper contracts used in the [Mobius](https://www.curve.fi/) Governance DAO.
 
 ## Overview
 
-Curve DAO consists of multiple smart contracts connected by [Aragon](https://github.com/aragon/aragonOS). Interaction with Aragon occurs through a [modified implementation](https://github.com/curvefi/curve-aragon-voting) of the [Aragon Voting App](https://github.com/aragon/aragon-apps/tree/master/apps/voting). Aragon's standard one token, one vote method is replaced with a weighting system based on locking tokens. Curve DAO has a token (CRV) which is used for both governance and value accrual.
+Mobius DAO consists of multiple smart contracts connected by [Aragon](https://github.com/aragon/aragonOS). Interaction with Aragon occurs through a [modified implementation](https://github.com/curvefi/curve-aragon-voting) of the [Aragon Voting App](https://github.com/aragon/aragon-apps/tree/master/apps/voting). Aragon's standard one token, one vote method is replaced with a weighting system based on locking tokens. Mobius DAO has a token (MOBI) which is used for both governance and value accrual.
 
-View the [documentation](https://curve.readthedocs.io/dao-overview.html) for a more in-depth explanation of how Curve DAO works.
+View the [documentation](https://curve.readthedocs.io/dao-overview.html) for a more in-depth explanation of how Mobius DAO works.
 
 ## Testing and Development
 
 ### Dependencies
 
 - [python3](https://www.python.org/downloads/release/python-368/) version 3.6 or greater, python3-dev
-- [vyper](https://github.com/vyperlang/vyper) version [0.2.4](https://github.com/vyperlang/vyper/releases/tag/v0.2.4)
+- [vyper](https://github.com/vyperlang/vyper) version [0.2.8](https://github.com/vyperlang/vyper/releases/tag/v0.2.8)
 - [brownie](https://github.com/iamdefinitelyahuman/brownie) - tested with version [1.14.6](https://github.com/eth-brownie/brownie/releases/tag/v1.14.6)
 - [brownie-token-tester](https://github.com/iamdefinitelyahuman/brownie-token-tester) - tested with version [0.2.2](https://github.com/iamdefinitelyahuman/brownie-token-tester/releases/tag/v0.2.2)
 - [ganache-cli](https://github.com/trufflesuite/ganache-cli) - tested with version [6.12.1](https://github.com/trufflesuite/ganache-cli/releases/tag/v6.12.1)
@@ -45,11 +45,11 @@ brownie test tests/integration
 
 ## Deployment
 
-See the [deployment documentation](scripts/deployment/README.md) for detailed information on how to deploy Curve DAO.
+See the [deployment documentation](scripts/deployment/README.md) for detailed information on how to deploy Mobius DAO.
 
 ## Audits and Security
 
-Curve DAO contracts have been audited by Trail of Bits and Quantstamp. These audit reports are made available on the [Curve website](https://dao.curve.fi/audits).
+Mobius DAO contracts have been audited by Trail of Bits and Quantstamp. These audit reports are made available on the [Mobius website](https://dao.curve.fi/audits).
 
 There is also an active [bug bounty](https://www.curve.fi/bugbounty) for issues which can lead to substantial loss of money, critical bugs such as a broken live-ness condition, or irreversible loss of funds.
 
@@ -57,9 +57,9 @@ There is also an active [bug bounty](https://www.curve.fi/bugbounty) for issues 
 
 You may find the following guides useful:
 
-1. [Curve and Curve DAO Resources](https://resources.curve.fi/)
-2. [How to earn and claim CRV](https://guides.curve.fi/how-to-earn-and-claim-crv/)
-3. [Voting and vote locking on Curve DAO](https://guides.curve.fi/voting-and-vote-locking-curve-dao/)
+1. [Mobius and Mobius DAO Resources](https://resources.curve.fi/)
+2. [How to earn and claim MOBI](https://guides.curve.fi/how-to-earn-and-claim-crv/)
+3. [Voting and vote locking on Mobius DAO](https://guides.curve.fi/voting-and-vote-locking-curve-dao/)
 
 ## Community
 

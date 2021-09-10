@@ -1,7 +1,7 @@
-# @version 0.2.4
+# @version 0.2.8
 """
-@title Curve DAO Token
-@author Curve Finance
+@title Mobius DAO Token
+@author Mobius Finance
 @license MIT
 @notice ERC20 with piecewise-linear mining supply.
 @dev Based on the ERC-20 token standard as defined at
@@ -59,7 +59,7 @@ YEAR: constant(uint256) = 86400 * 365
 # left for inflation: 57%
 
 # Supply parameters
-INITIAL_SUPPLY: constant(uint256) = 1_303_030_303
+INITIAL_SUPPLY: constant(uint256) = 1_000_000_000
 INITIAL_RATE: constant(uint256) = 274_815_283 * 10 ** 18 / YEAR  # leading to 43% premine
 RATE_REDUCTION_TIME: constant(uint256) = YEAR
 RATE_REDUCTION_COEFFICIENT: constant(uint256) = 1189207115002721024  # 2 ** (1/4) * 1e18
@@ -198,7 +198,7 @@ def mintable_in_timeframe(start: uint256, end: uint256) -> uint256:
 
     assert end <= current_epoch_time + RATE_REDUCTION_TIME  # dev: too far in future
 
-    for i in range(999):  # Curve will not work in 1000 years. Darn!
+    for i in range(999):  # Mobius will not work in 1000 years. Darn!
         if end >= current_epoch_time:
             current_end: uint256 = end
             if current_end > current_epoch_time + RATE_REDUCTION_TIME:

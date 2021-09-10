@@ -1,7 +1,7 @@
 # @version 0.2.7
 """
 @title USDN Burner
-@notice Return 50% of USDN to pool LPs, convert remaining to 3CRV
+@notice Return 50% of USDN to pool LPs, convert remaining to 3MOBI
 """
 
 from vyper.interfaces import ERC20
@@ -68,7 +68,7 @@ def __init__(_pool_proxy: address, _receiver: address, _recovery: address, _owne
 @external
 def burn(_coin: address) -> bool:
     """
-    @notice Swap `_coin` for 3CRV and transfer to the fee distributor
+    @notice Swap `_coin` for 3MOBI and transfer to the fee distributor
     @param _coin Address of the coin being swapped
     @return bool success
     """
@@ -93,7 +93,7 @@ def burn(_coin: address) -> bool:
         # donate tranferred USDN to LPs
         PoolProxy(self.pool_proxy).donate_admin_fees(USDN_POOL)
 
-        # swap remaining USDN for 3CRV and transfer to fee distributor
+        # swap remaining USDN for 3MOBI and transfer to fee distributor
         amount = ERC20(USDN).balanceOf(self)
         registry_swap: address = AddressProvider(ADDRESS_PROVIDER).get_address(2)
         if not self.is_approved[registry_swap]:

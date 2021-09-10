@@ -13,5 +13,5 @@ def main():
 
     pylab.plot(blocks, powers)
     pylab.xlabel("Block number")
-    pylab.ylabel("Total veCRV")
+    pylab.ylabel("Total veMOBI")
     pylab.show()

@@ -14,7 +14,7 @@ struct VotedSlope:
     end: uint256
 
 
-contract CRV20:
+contract MOBI20:
     def start_epoch_time_write() -> timestamp: modifying
     def start_epoch_time() -> timestamp: constant
 
@@ -25,7 +25,7 @@ contract VotingEscrow:
 
 
 admin: address  # Can and will be a smart contract
-token: address  # CRV token
+token: address  # MOBI token
 voting_escrow: address  # Voting escrow
 
 # Gauge parameters
@@ -73,7 +73,7 @@ def __init__(_token: address, _voting_escrow: address):
     self.n_gauges = 0
     self.period = 0
     self.period_timestamp[0] = block.timestamp
-    self.last_epoch_time = CRV20(_token).start_epoch_time_write()
+    self.last_epoch_time = MOBI20(_token).start_epoch_time_write()
 
 
 @public
@@ -99,7 +99,7 @@ def change_epoch(_p: int128) -> (int128, bool):
     #     insert a new period
     # else use the current period for both weght and epoch change
     p: int128 = _p
-    let: timestamp = CRV20(self.token).start_epoch_time_write()
+    let: timestamp = MOBI20(self.token).start_epoch_time_write()
     epoch_changed: bool = (let > self.period_timestamp[p]) and (let <= block.timestamp)
     if epoch_changed:
         p += 1

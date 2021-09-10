@@ -1,8 +1,8 @@
-# @version 0.2.4
+# @version 0.2.8
 
 """
 @title Gauge Controller
-@author Curve Finance
+@author Mobius Finance
 @license MIT
 @notice Controls liquidity gauges and the issuance of coins through the gauges
 """
@@ -68,7 +68,7 @@ MULTIPLIER: constant(uint256) = 10 ** 18
 admin: public(address)  # Can and will be a smart contract
 future_admin: public(address)  # Can and will be a smart contract
 
-token: public(address)  # CRV token
+token: public(address)  # MOBI token
 voting_escrow: public(address)  # Voting escrow
 
 # Gauge parameters
@@ -113,7 +113,7 @@ time_type_weight: public(uint256[1000000000])  # type_id -> last scheduled time 
 def __init__(_token: address, _voting_escrow: address):
     """
     @notice Contract constructor
-    @param _token `ERC20CRV` contract address
+    @param _token `ERC20MOBI` contract address
     @param _voting_escrow `VotingEscrow` contract address
     """
     assert _token != ZERO_ADDRESS

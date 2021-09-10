@@ -575,7 +575,7 @@
            y="32.544933"
            x="147.12445"
            id="tspan838"
-           sodipodi:role="line">Curve pool A</tspan></text>
+           sodipodi:role="line">Mobius pool A</tspan></text>
     </g>
     <g
        id="g905"
@@ -618,7 +618,7 @@
            y="84.138687"
            x="147.12444"
            id="tspan838-3"
-           sodipodi:role="line">Curve pool B</tspan></text>
+           sodipodi:role="line">Mobius pool B</tspan></text>
     </g>
     <g
        id="g940">
@@ -1028,7 +1028,7 @@
            y="150.40096"
            x="-144.60812"
            id="tspan838-6-6-4"
-           sodipodi:role="line">CRV token</tspan></text>
+           sodipodi:role="line">MOBI token</tspan></text>
     </g>
     <path
        style="fill:none;fill-rule:evenodd;stroke:#666666;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker6551)"
@@ -1302,6 +1302,6 @@
          x="-182.07405"
          y="19.902666"
          style="text-align:center;text-anchor:middle;stroke-width:0.26458332px"
-         id="tspan2194">Curve user</tspan></text>
+         id="tspan2194">Mobius user</tspan></text>
   </g>
 </svg>

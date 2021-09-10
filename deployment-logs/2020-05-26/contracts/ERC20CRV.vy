@@ -119,7 +119,7 @@ def mintable_in_timeframe(start: uint256, end: uint256) -> uint256:
 
     assert end <= current_epoch_time + RATE_REDUCTION_TIME  # Not too far in future
 
-    for i in range(999):  # Curve will not work in 1000 years. Darn!
+    for i in range(999):  # Mobius will not work in 1000 years. Darn!
         if end >= current_epoch_time:
             current_end: uint256 = end
             if current_end > current_epoch_time + RATE_REDUCTION_TIME:

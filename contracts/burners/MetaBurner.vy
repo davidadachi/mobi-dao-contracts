@@ -1,7 +1,7 @@
 # @version 0.2.7
 """
 @title Meta Burner
-@notice Converts Metapool-paired coins to 3CRV and transfers to fee distributor
+@notice Converts Metapool-paired coins to 3MOBI and transfers to fee distributor
 """
 
 from vyper.interfaces import ERC20
@@ -59,7 +59,7 @@ def __init__(_receiver: address, _recovery: address, _owner: address, _emergency
 @external
 def burn(_coin: address) -> bool:
     """
-    @notice Swap `_coin` for 3CRV and transfer to the fee distributor
+    @notice Swap `_coin` for 3MOBI and transfer to the fee distributor
     @param _coin Address of the coin being swapped
     @return bool success
     """
@@ -84,7 +84,7 @@ def burn(_coin: address) -> bool:
     # get actual balance in case of transfer fee or pre-existing balance
     amount = ERC20(_coin).balanceOf(self)
 
-    # swap coin for 3CRV and transfer to fee distributor
+    # swap coin for 3MOBI and transfer to fee distributor
     registry_swap: address = AddressProvider(ADDRESS_PROVIDER).get_address(2)
     if not self.is_approved[registry_swap][_coin]:
         response: Bytes[32] = raw_call(

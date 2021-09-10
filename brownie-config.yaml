@@ -1,15 +1,20 @@
 reports:
   exclude_paths:
     - contracts/testing/*.*
-
-networks:
-  development:
-    cmd_settings:
-      accounts: 100
-  mainnet-fork:
-    cmd_settings:
-      unlock: 0xC447FcAF1dEf19A583F97b3620627BF69c05b5fB
-
+network:
+  default: alfajores
+  settings:
+    gas_limit: "auto"
+    gas_price: "auto"
+    persist: true
+    reverting_tx_gas_limit: false # if false, reverting tx's will raise without broadcasting
+  networks:
+    development:
+      cmd_settings:
+        accounts: 100
+    mainnet-fork:
+      cmd_settings:
+        unlock: 0xC447FcAF1dEf19A583F97b3620627BF69c05b5fB
 autofetch_sources: True
 dependencies:
   - curvefi/curve-crypto-contract@1.0.0

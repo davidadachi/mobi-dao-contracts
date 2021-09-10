@@ -31,7 +31,7 @@ def test_withdraw_borked_rewards(
         liquidity_gauge_reward.deposit(amount, {"from": accounts[i]})
         chain.sleep(duration)
 
-    # Calling this method without transfering tokens breaks `CurveRewards.getReward`
+    # Calling this method without transfering tokens breaks `MobiusRewards.getReward`
     # however, it should still be possible to withdraw if `claim_rewards = False`
     reward_contract.notifyRewardAmount(10 ** 20, {"from": accounts[0]})
 

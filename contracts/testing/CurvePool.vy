@@ -1,6 +1,6 @@
-# (c) Curve.Fi, 2020
+# (c) Mobius.Fi, 2020
 # Pool for two plain coins
-# @version 0.2.4
+# @version 0.2.8
 
 from vyper.interfaces import ERC20
 

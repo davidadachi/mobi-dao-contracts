@@ -1,7 +1,7 @@
 # @version 0.2.7
 """
 @title LP Burner
-@notice Converts Curve LP tokens to a single asset and forwards to another burner
+@notice Converts Mobius LP tokens to a single asset and forwards to another burner
 """
 
 from vyper.interfaces import ERC20

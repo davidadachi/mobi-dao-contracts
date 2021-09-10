@@ -1,9 +1,9 @@
-# @version 0.2.4
+# @version 0.2.8
 """
 @title Vesting Escrow
-@author Curve Finance
+@author Mobius Finance
 @license MIT
-@notice Vests `ERC20CRV` tokens for multiple addresses over multiple vesting periods
+@notice Vests `ERC20MOBI` tokens for multiple addresses over multiple vesting periods
 """
 
 

@@ -7,7 +7,7 @@ from brownie.convert import to_address
 
 warnings.filterwarnings("ignore")
 
-# this script is used to prepare, simulate and broadcast votes within Curve's DAO
+# this script is used to prepare, simulate and broadcast votes within Mobius's DAO
 # modify the constants below according the the comments, and then use `simulate` in
 # a forked mainnet to verify the result of the vote prior to broadcasting on mainnet
 

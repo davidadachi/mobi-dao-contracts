@@ -1,7 +1,7 @@
 # @version 0.2.8
 """
 @title Tokenized Liquidity Gauge Wrapper
-@author Curve Finance
+@author Mobius Finance
 @license MIT
 @notice Allows tokenized deposits and claiming from `LiquidityGaugeReward`
 """
@@ -199,7 +199,7 @@ def claimable_reward(addr: address) -> uint256:
 @nonreentrant('lock')
 def claim_tokens(addr: address = msg.sender):
     """
-    @notice Claim mintable CRV and reward tokens
+    @notice Claim mintable MOBI and reward tokens
     @param addr Address to claim for
     """
     self._checkpoint(addr)

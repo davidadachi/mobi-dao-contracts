@@ -1,7 +1,7 @@
 # @version 0.2.12
 """
 @title Checkpoint Proxy
-@author Curve.Fi
+@author Mobius.Fi
 @license MIT
 @notice Calls `checkpoint` on Anyswap gauges to meet bridge whitelisting requirements
 """

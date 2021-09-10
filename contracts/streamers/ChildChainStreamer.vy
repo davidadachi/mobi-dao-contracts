@@ -1,7 +1,7 @@
 # @version 0.2.12
 """
 @title Child-Chain Streamer
-@author Curve.Fi
+@author Mobius.Fi
 @license MIT
 @notice Evenly streams one or more reward tokens to a single recipient
 """

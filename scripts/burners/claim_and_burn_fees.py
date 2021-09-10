@@ -9,8 +9,8 @@ from brownie.network.gas.strategies import GasNowScalingStrategy
 warnings.filterwarnings("ignore")
 
 # This script is used to claim fees from all pool contracts
-# and "burn" them, converting to 3CRV and sending it to the
-# fee distributor to be claimed by veCRV holders. All of the
+# and "burn" them, converting to 3MOBI and sending it to the
+# fee distributor to be claimed by veMOBI holders. All of the
 # transactions within the script may be executed by any account
 # at any time.
 
@@ -24,7 +24,7 @@ CLAIM_THRESHOLD = 1000
 COINS = [
     # LP Burner - for withdrawing LP tokens
     # this burner is called first, as it forwards into other burners
-    "0x075b1bb99792c9E1041bA13afEf80C91a1e70fB3",  # sbtcCRV
+    "0x075b1bb99792c9E1041bA13afEf80C91a1e70fB3",  # sbtcMOBI
     # BTC burner, converts to USDC and sends to underlying burner
     "0xeb4c2781e4eba804ce9a9803c67d0893436bb27d",  # renBTC
     "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",  # wBTC
@@ -60,7 +60,7 @@ COINS = [
     "0x1bE5d71F2dA660BFdee8012dDc58D024448A0A59",  # pax/yUSDT
     "0x04bC0Ab673d88aE9dbC9DA2380cB6B79C4BCa9aE",  # yTUSD
     "0x73a052500105205d34Daf004eAb301916DA8190f",  # yBUSD
-    # meta-burner, for assets that can be directly swapped to 3CRV
+    # meta-burner, for assets that can be directly swapped to 3MOBI
     "0x056fd409e1d7a124bd7017459dfea2f387b6d5cd",  # GUSD
     "0xdf574c24545e5ffecb9a659c229253d4111d87e1",  # HUSD
     "0x1c48f86ae57291f7686349f12601910bd8d470bb",  # USDK
@@ -206,7 +206,7 @@ def main(acct=CALLER, claim_threshold=CLAIM_THRESHOLD):
             proxy.withdraw_many(to_claim, {"from": acct, "gas_price": gas_strategy})
             to_claim = []
 
-    # call burners to convert fee tokens to 3CRV
+    # call burners to convert fee tokens to 3MOBI
     burn_start = 0
     to_burn = []
     for i in range(len(COINS)):
@@ -235,12 +235,12 @@ def main(acct=CALLER, claim_threshold=CLAIM_THRESHOLD):
     time.sleep(max(burn_start + 180 - time.time(), 0))
 
     # call `execute` on the underlying burner
-    # deposits DAI/USDC/USDT into 3pool and transfers the 3CRV to the fee distributor
+    # deposits DAI/USDC/USDT into 3pool and transfers the 3MOBI to the fee distributor
     underlying_burner = Contract("0x874210cF3dC563B98c137927e7C951491A2e9AF3")
     underlying_burner.execute({"from": acct, "gas_price": gas_strategy})
 
-    # finally, call to burn 3CRV - this also triggers a token checkpoint
+    # finally, call to burn 3MOBI - this also triggers a token checkpoint
     proxy.burn(lp_tripool, {"from": acct, "gas_price": gas_strategy})
 
     final = lp_tripool.balanceOf(distributor)
-    print(f"Success! Total 3CRV fowarded to distributor: {(final-initial_balance)/1e18:.4f}")
+    print(f"Success! Total 3MOBI fowarded to distributor: {(final-initial_balance)/1e18:.4f}")

@@ -19,7 +19,7 @@ from brownie import (
 )
 
 BURNERS = {
-    LPBurner: ["0x075b1bb99792c9E1041bA13afEf80C91a1e70fB3"],  # sbtcCRV
+    LPBurner: ["0x075b1bb99792c9E1041bA13afEf80C91a1e70fB3"],  # sbtcMOBI
     BTCBurner: [
         "0xeb4c2781e4eba804ce9a9803c67d0893436bb27d",  # renBTC
         "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",  # wBTC
@@ -131,7 +131,7 @@ def test_fee_distribution():
 
     lp_burner = LPBurner.deploy(alice, alice, alice, {"from": alice})
 
-    # set LP burner to unwrap sbtcCRV -> sBTC and transfer to BTC burner
+    # set LP burner to unwrap sbtcMOBI -> sBTC and transfer to BTC burner
     lp_burner.set_swap_data(
         "0x075b1bb99792c9E1041bA13afEf80C91a1e70fB3",
         "0xfe18be6b3bd88a2d2a7f928d00292e7a9963cfc6",
@@ -184,13 +184,13 @@ def test_fee_distribution():
         assert coin.balanceOf(alice) < 2
         assert coin.balanceOf(distributor) < 2
 
-    # verify zero-balance for 3CRV
+    # verify zero-balance for 3MOBI
     for burner in burner_list:
         assert lp_tripool.balanceOf(burner) == 0
     assert lp_tripool.balanceOf(proxy) == 0
     assert lp_tripool.balanceOf(alice) == 0
 
-    # verify that fee distributor has received 3CRV
+    # verify that fee distributor has received 3MOBI
     amount = lp_tripool.balanceOf(distributor)
     assert amount > 0
-    print(f"Success! Final 3CRV balance in distributor: {amount/1e18:.4f}")
+    print(f"Success! Final 3MOBI balance in distributor: {amount/1e18:.4f}")

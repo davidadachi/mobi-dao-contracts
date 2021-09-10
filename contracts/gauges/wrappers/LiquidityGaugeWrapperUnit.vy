@@ -1,9 +1,9 @@
 # @version 0.2.11
 """
 @title Tokenized Gauge Wrapper: Unit Protocol Edition
-@author Curve Finance
+@author Mobius Finance
 @license MIT
-@notice Tokenizes gauge deposits to allow claiming of CRV when
+@notice Tokenizes gauge deposits to allow claiming of MOBI when
         deposited as a collateral within the unit.xyz Vault
 """
 
@@ -156,7 +156,7 @@ def claimable_tokens(addr: address) -> uint256:
 @nonreentrant('lock')
 def claim_tokens(addr: address = msg.sender):
     """
-    @notice Claim mintable CRV
+    @notice Claim mintable MOBI
     @param addr Address to claim for
     """
     self._checkpoint([addr, ZERO_ADDRESS])
@@ -284,7 +284,7 @@ def transferFrom(_from : address, _to : address, _value : uint256) -> bool:
 
     if _to == UNIT_VAULT:
         # when a `transferFrom` directs into the vault, consider it a deposited
-        # balance so that the recipient may still claim CRV from it
+        # balance so that the recipient may still claim MOBI from it
         self.depositedBalanceOf[_from] += _value
 
     return True

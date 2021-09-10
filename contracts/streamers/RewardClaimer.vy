@@ -1,7 +1,7 @@
 # @version 0.2.12
 """
 @title RewardClaimer
-@author Curve.Fi
+@author Mobius.Fi
 @license MIT
 @notice Passthrough to allow claiming from multiple reward streamers
 """

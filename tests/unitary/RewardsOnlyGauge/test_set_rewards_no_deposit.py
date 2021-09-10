@@ -7,8 +7,8 @@ LP_AMOUNT = 10 ** 18
 
 
 @pytest.fixture(scope="module")
-def reward_contract_2(CurveRewards, mock_lp_token, accounts, coin_a):
-    contract = CurveRewards.deploy(mock_lp_token, coin_a, {"from": accounts[0]})
+def reward_contract_2(MobiusRewards, mock_lp_token, accounts, coin_a):
+    contract = MobiusRewards.deploy(mock_lp_token, coin_a, {"from": accounts[0]})
     contract.setRewardDistribution(accounts[0], {"from": accounts[0]})
     yield contract
 

@@ -34,7 +34,7 @@ BURNERS = {
         "0x39aa39c021dfbae8fac545936693ac917d5e7563",  # cDAI
         "0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",  # cUSDC
     ],
-    LPBurner: ["0x075b1bb99792c9E1041bA13afEf80C91a1e70fB3"],  # sbtcCRV
+    LPBurner: ["0x075b1bb99792c9E1041bA13afEf80C91a1e70fB3"],  # sbtcMOBI
     MetaBurner: [
         "0x056fd409e1d7a124bd7017459dfea2f387b6d5cd",  # GUSD
         "0xdf574c24545e5ffecb9a659c229253d4111d87e1",  # HUSD
@@ -106,7 +106,7 @@ def main(deployer=DEPLOYER):
     # for LP burner we retain initial ownership to set it up
     lp_burner = LPBurner.deploy(RECOVERY, deployer, EMERGENCY_ADMIN, {"from": deployer})
 
-    # set LP burner to unwrap sbtcCRV -> sBTC and transfer to BTC burner
+    # set LP burner to unwrap sbtcMOBI -> sBTC and transfer to BTC burner
     lp_burner.set_swap_data(
         "0x075b1bb99792c9E1041bA13afEf80C91a1e70fB3",
         "0xfe18be6b3bd88a2d2a7f928d00292e7a9963cfc6",

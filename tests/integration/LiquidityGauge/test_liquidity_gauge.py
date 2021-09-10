@@ -152,12 +152,12 @@ def test_mining_with_votelock(
     assert voting_escrow.balanceOf(alice) == 0
     assert voting_escrow.balanceOf(bob) == 0
 
-    # Alice earned 2.5 times more CRV because she vote-locked her CRV
+    # Alice earned 2.5 times more MOBI because she vote-locked her MOBI
     rewards_alice = liquidity_gauge.integrate_fraction(alice)
     rewards_bob = liquidity_gauge.integrate_fraction(bob)
     assert approx(rewards_alice / rewards_bob, 2.5, 1e-5)
 
-    # Time travel / checkpoint: no one has CRV vote-locked
+    # Time travel / checkpoint: no one has MOBI vote-locked
     chain.sleep(4 * WEEK)
     alice.transfer(alice, 1)
     voting_escrow.withdraw({"from": alice})
@@ -188,7 +188,7 @@ def test_mining_with_votelock(
         else:
             break
 
-    # Time travel / checkpoint: no one has CRV vote-locked
+    # Time travel / checkpoint: no one has MOBI vote-locked
     chain.sleep(4 * WEEK)
     alice.transfer(alice, 1)
     voting_escrow.withdraw({"from": alice})

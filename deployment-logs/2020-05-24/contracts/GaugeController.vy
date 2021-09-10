@@ -1,12 +1,12 @@
 # The contract which controls gauges and issuance of coins through those
 
-contract CRV20:
+contract MOBI20:
     def start_epoch_time_write() -> timestamp: modifying
     def start_epoch_time() -> timestamp: constant
 
 
 admin: address  # Can and will be a smart contract
-token: address  # CRV token
+token: address  # MOBI token
 
 # Gauge parameters
 # All numbers are "fixed point" on the basis of 1e18
@@ -45,7 +45,7 @@ def __init__(token_address: address):
     self.n_gauges = 0
     self.period = 0
     self.period_timestamp[0] = block.timestamp
-    self.last_epoch_time = CRV20(token_address).start_epoch_time_write()
+    self.last_epoch_time = MOBI20(token_address).start_epoch_time_write()
 
 
 @public
@@ -71,7 +71,7 @@ def change_epoch(_p: int128) -> (int128, bool):
     #     insert a new period
     # else use the current period for both weght and epoch change
     p: int128 = _p
-    let: timestamp = CRV20(self.token).start_epoch_time_write()
+    let: timestamp = MOBI20(self.token).start_epoch_time_write()
     epoch_changed: bool = (let > self.period_timestamp[p]) and (let < block.timestamp)
     if epoch_changed:
         p += 1

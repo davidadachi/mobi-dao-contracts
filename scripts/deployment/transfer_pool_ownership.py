@@ -1,6 +1,6 @@
 import json
 
-from brownie import CurvePool, accounts, chain
+from brownie import MobiusPool, accounts, chain
 
 from . import deployment_config as config
 
@@ -37,7 +37,7 @@ def development():
 
 def transfer_ownership(admin, new_admin, confs):
     for addr in POOLS:
-        contract = CurvePool.at(addr)
+        contract = MobiusPool.at(addr)
 
         if contract.owner() != admin:
             print(f"ERROR: {admin} is not the owner of {addr}")
@@ -60,7 +60,7 @@ def transfer_ownership(admin, new_admin, confs):
 
 def sanity_check(owner):
     for addr in POOLS:
-        contract = CurvePool.at(addr)
+        contract = MobiusPool.at(addr)
 
         if contract.owner() != owner:
             raise ValueError(f"Unexpected owner for {addr}")

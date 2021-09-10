@@ -1,14 +1,14 @@
 # @version 0.2.7
 """
-@title Curve StableSwap Proxy
-@author Curve Finance
+@title Mobius StableSwap Proxy
+@author Mobius Finance
 @license MIT
 """
 
 interface Burner:
     def burn(_coin: address) -> bool: payable
 
-interface Curve:
+interface Mobius:
     def withdraw_admin_fees(): nonpayable
     def kill_me(): nonpayable
     def unkill_me(): nonpayable
@@ -202,7 +202,7 @@ def withdraw_admin_fees(_pool: address):
     @notice Withdraw admin fees from `_pool`
     @param _pool Pool address to withdraw admin fees from
     """
-    Curve(_pool).withdraw_admin_fees()
+    Mobius(_pool).withdraw_admin_fees()
 
 
 @external
@@ -215,7 +215,7 @@ def withdraw_many(_pools: address[20]):
     for pool in _pools:
         if pool == ZERO_ADDRESS:
             break
-        Curve(pool).withdraw_admin_fees()
+        Mobius(pool).withdraw_admin_fees()
 
 
 @external
@@ -266,7 +266,7 @@ def kill_me(_pool: address):
     @param _pool Pool address to pause
     """
     assert msg.sender == self.emergency_admin, "Access denied"
-    Curve(_pool).kill_me()
+    Mobius(_pool).kill_me()
 
 
 @external
@@ -277,7 +277,7 @@ def unkill_me(_pool: address):
     @param _pool Pool address to unpause
     """
     assert msg.sender == self.emergency_admin or msg.sender == self.ownership_admin, "Access denied"
-    Curve(_pool).unkill_me()
+    Mobius(_pool).unkill_me()
 
 
 @external
@@ -299,7 +299,7 @@ def commit_transfer_ownership(_pool: address, new_owner: address):
     @param new_owner New pool owner address
     """
     assert msg.sender == self.ownership_admin, "Access denied"
-    Curve(_pool).commit_transfer_ownership(new_owner)
+    Mobius(_pool).commit_transfer_ownership(new_owner)
 
 
 @external
@@ -309,7 +309,7 @@ def apply_transfer_ownership(_pool: address):
     @notice Apply transferring ownership of `_pool`
     @param _pool Pool address
     """
-    Curve(_pool).apply_transfer_ownership()
+    Mobius(_pool).apply_transfer_ownership()
 
 
 @external
@@ -319,7 +319,7 @@ def accept_transfer_ownership(_pool: address):
     @notice Apply transferring ownership of `_pool`
     @param _pool Pool address
     """
-    Curve(_pool).accept_transfer_ownership()
+    Mobius(_pool).accept_transfer_ownership()
 
 
 @external
@@ -330,7 +330,7 @@ def revert_transfer_ownership(_pool: address):
     @param _pool Pool address
     """
     assert msg.sender in [self.ownership_admin, self.emergency_admin], "Access denied"
-    Curve(_pool).revert_transfer_ownership()
+    Mobius(_pool).revert_transfer_ownership()
 
 
 @external
@@ -352,7 +352,7 @@ def commit_new_parameters(_pool: address,
     """
     assert msg.sender == self.parameter_admin, "Access denied"
     self.min_asymmetries[_pool] = min_asymmetry
-    Curve(_pool).commit_new_parameters(amplification, new_fee, new_admin_fee)  # dev: if implemented by the pool
+    Mobius(_pool).commit_new_parameters(amplification, new_fee, new_admin_fee)  # dev: if implemented by the pool
 
 
 @external
@@ -395,7 +395,7 @@ def apply_new_parameters(_pool: address):
 
         assert asymmetry >= min_asymmetry, "Unsafe to apply"
 
-    Curve(_pool).apply_new_parameters()  # dev: if implemented by the pool
+    Mobius(_pool).apply_new_parameters()  # dev: if implemented by the pool
 
 
 @external
@@ -406,7 +406,7 @@ def revert_new_parameters(_pool: address):
     @param _pool Pool address
     """
     assert msg.sender in [self.ownership_admin, self.parameter_admin, self.emergency_admin], "Access denied"
-    Curve(_pool).revert_new_parameters()  # dev: if implemented by the pool
+    Mobius(_pool).revert_new_parameters()  # dev: if implemented by the pool
 
 
 @external
@@ -419,7 +419,7 @@ def commit_new_fee(_pool: address, new_fee: uint256, new_admin_fee: uint256):
     @param new_admin_fee New admin fee
     """
     assert msg.sender == self.parameter_admin, "Access denied"
-    Curve(_pool).commit_new_fee(new_fee, new_admin_fee)
+    Mobius(_pool).commit_new_fee(new_fee, new_admin_fee)
 
 
 @external
@@ -429,7 +429,7 @@ def apply_new_fee(_pool: address):
     @notice Apply new fees for `_pool` pool
     @param _pool Pool address
     """
-    Curve(_pool).apply_new_fee()
+    Mobius(_pool).apply_new_fee()
 
 
 @external
@@ -442,7 +442,7 @@ def ramp_A(_pool: address, _future_A: uint256, _future_time: uint256):
     @param _future_time Future time
     """
     assert msg.sender == self.parameter_admin, "Access denied"
-    Curve(_pool).ramp_A(_future_A, _future_time)
+    Mobius(_pool).ramp_A(_future_A, _future_time)
 
 
 @external
@@ -453,7 +453,7 @@ def stop_ramp_A(_pool: address):
     @param _pool Pool address
     """
     assert msg.sender in [self.parameter_admin, self.emergency_admin], "Access denied"
-    Curve(_pool).stop_ramp_A()
+    Mobius(_pool).stop_ramp_A()
 
 
 @external
@@ -465,7 +465,7 @@ def set_aave_referral(_pool: address, referral_code: uint256):
     @param referral_code Aave referral code
     """
     assert msg.sender == self.ownership_admin, "Access denied"
-    Curve(_pool).set_aave_referral(referral_code)  # dev: if implemented by the pool
+    Mobius(_pool).set_aave_referral(referral_code)  # dev: if implemented by the pool
 
 
 @external
@@ -491,4 +491,4 @@ def donate_admin_fees(_pool: address):
     if msg.sender != self.ownership_admin:
         assert self.donate_approval[_pool][msg.sender], "Access denied"
 
-    Curve(_pool).donate_admin_fees()  # dev: if implemented by the pool
+    Mobius(_pool).donate_admin_fees()  # dev: if implemented by the pool

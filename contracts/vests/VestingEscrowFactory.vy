@@ -1,9 +1,9 @@
-# @version 0.2.4
+# @version 0.2.8
 """
 @title Vesting Escrow Factory
-@author Curve Finance
+@author Mobius Finance
 @license MIT
-@notice Stores and distributes `ERC20CRV` tokens by deploying `VestingEscrowSimple` contracts
+@notice Stores and distributes `ERC20MOBI` tokens by deploying `VestingEscrowSimple` contracts
 """
 
 from vyper.interfaces import ERC20

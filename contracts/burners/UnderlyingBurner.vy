@@ -168,7 +168,7 @@ def convert_synth(_currency_key: bytes32, _amount: uint256) -> bool:
 @external
 def execute() -> bool:
     """
-    @notice Add liquidity to 3pool and transfer 3CRV to the fee distributor
+    @notice Add liquidity to 3pool and transfer 3MOBI to the fee distributor
     @return bool success
     """
     assert not self.is_killed  # dev: is killed

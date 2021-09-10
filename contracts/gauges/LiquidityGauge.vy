@@ -1,14 +1,14 @@
-# @version 0.2.4
+# @version 0.2.8
 """
 @title Liquidity Gauge
-@author Curve Finance
+@author Mobius Finance
 @license MIT
 @notice Used for measuring liquidity and insurance
 """
 
 from vyper.interfaces import ERC20
 
-interface CRV20:
+interface MOBI20:
     def future_epoch_time_write() -> uint256: nonpayable
     def rate() -> uint256: view
 
@@ -116,17 +116,17 @@ def __init__(lp_addr: address, _minter: address, _admin: address):
     self.controller = controller_addr
     self.voting_escrow = Controller(controller_addr).voting_escrow()
     self.period_timestamp[0] = block.timestamp
-    self.inflation_rate = CRV20(crv_addr).rate()
-    self.future_epoch_time = CRV20(crv_addr).future_epoch_time_write()
+    self.inflation_rate = MOBI20(crv_addr).rate()
+    self.future_epoch_time = MOBI20(crv_addr).future_epoch_time_write()
     self.admin = _admin
 
 
 @internal
 def _update_liquidity_limit(addr: address, l: uint256, L: uint256):
     """
-    @notice Calculate limits which depend on the amount of CRV token per-user.
+    @notice Calculate limits which depend on the amount of MOBI token per-user.
             Effectively it calculates working balances to apply amplification
-            of CRV production by CRV
+            of MOBI production by MOBI
     @param addr User address
     @param l User's amount of liquidity (LP tokens)
     @param L Total amount of liquidity (LP tokens)
@@ -164,8 +164,8 @@ def _checkpoint(addr: address):
     new_rate: uint256 = rate
     prev_future_epoch: uint256 = self.future_epoch_time
     if prev_future_epoch >= _period_time:
-        self.future_epoch_time = CRV20(_token).future_epoch_time_write()
-        new_rate = CRV20(_token).rate()
+        self.future_epoch_time = MOBI20(_token).future_epoch_time_write()
+        new_rate = MOBI20(_token).rate()
         self.inflation_rate = new_rate
     Controller(_controller).checkpoint_gauge(self)
 

@@ -1,6 +1,6 @@
 from brownie import Contract, accounts, history
 
-# this script is used for bridging CRV rewards to sidechains
+# this script is used for bridging MOBI rewards to sidechains
 # it should be run once per week, just after the start of the epoch week
 
 FTM = [

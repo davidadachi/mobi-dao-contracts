@@ -1,6 +1,6 @@
-# Curve DAO
+# Mobius DAO
 
-Curve DAO consists of multiple smart contracts connected by Aragon. Apart from
+Mobius DAO consists of multiple smart contracts connected by Aragon. Apart from
 that, standard Aragon's 1 token = 1 vote method is replaced with the voting
 weight proportional to locktime, as will be described below.
 
@@ -8,12 +8,11 @@ weight proportional to locktime, as will be described below.
 <img src="dao-overview.svg">
 </div>
 
-
-Curve DAO has a token CRV which is used for both governance and value accrual.
+Mobius DAO has a token MOBI which is used for both governance and value accrual.
 
 ## Time-weighted voting. Vote-locked tokens in VotingEscrow
 
-Instead of voting with token amount <img src="https://render.githubusercontent.com/render/math?math=a">, in Curve DAO tokens are lockable
+Instead of voting with token amount <img src="https://render.githubusercontent.com/render/math?math=a">, in Mobius DAO tokens are lockable
 in a _VotingEscrow_ for a selectable locktime <img src="https://render.githubusercontent.com/render/math?math=t_l">, where <img src="https://render.githubusercontent.com/render/math?math=t_l < t_{\max}">,
 and <img src="https://render.githubusercontent.com/render/math?math=t_{\max} = 4~\text{years}">. After locking, the time _left to unlock_
 is <img src="https://render.githubusercontent.com/render/math?math=t\le t_l">. The voting weight is equal to:
@@ -31,12 +30,11 @@ return the time-weighted voting weight <img src="https://render.githubuserconten
 <img src="https://render.githubusercontent.com/render/math?math=W = \sum w_i"> respectively. Aragon can interface _VotingEscrow_ as if it was
 a typical governance token.
 
-
 <div align="center">
 <img src="votelock.svg" width=280>
 </div>
 
-Locks can be created with `create_lock()`,  extended in time with `increase_unlock_time()`
+Locks can be created with `create_lock()`, extended in time with `increase_unlock_time()`
 or token amount with `increase_amount()`, and `withdraw()` can remove tokens
 from the escrow when the lock is expired.
 
@@ -61,11 +59,11 @@ and when the locktime expires. All the possible expiration times are rounded to
 whole weeks to make number of reads from blockchain proportional to number of
 missed weeks at most, not number of users (which can be potentially large).
 
-## Inflation schedule. ERC20CRV
+## Inflation schedule. ERC20MOBI
 
-Token _ERC20CRV_ is an ERC20 token which allows a piecewise linear inflation
+Token _ERC20MOBI_ is an ERC20 token which allows a piecewise linear inflation
 schedule. The inflation is dropping by <img src="https://render.githubusercontent.com/render/math?math=2^{1/4}"> every year.
-Only _Minter_ contract can directly mint _ERC20CRV_, but only within the limits
+Only _Minter_ contract can directly mint _ERC20MOBI_, but only within the limits
 defined by inflation.
 
 Each time the inflation changes, a new mining epoch starts.
@@ -74,18 +72,18 @@ Each time the inflation changes, a new mining epoch starts.
 <img src="inflation.svg" width=280/>
 </div>
 
-Initial supply of CRV is <img src="https://render.githubusercontent.com/render/math?math=1.273"> billion tokens, which is $42\% of the eventual
+Initial supply of MOBI is <img src="https://render.githubusercontent.com/render/math?math=1.273"> billion tokens, which is $42\% of the eventual
 (<img src="https://render.githubusercontent.com/render/math?math=t\rightarrow\infty">) supply of <img src="https://render.githubusercontent.com/render/math?math=\approx 3.03"> billion tokens.
 All of those initial tokens tokens are gradually vested (with every block).
 The initial inflation rate which supports the above inflation schedule is
-<img src="https://render.githubusercontent.com/render/math?math=r=22.0\%"> (279.6 millions per year). All of the inflation is distributed to users of Curve,
+<img src="https://render.githubusercontent.com/render/math?math=r=22.0\%"> (279.6 millions per year). All of the inflation is distributed to users of Mobius,
 according to measurements taken by _gauges_.
 During the first year, the approximate inflow into circulating supply is 2 millions
-CRV per day, starting from 0.
+MOBI per day, starting from 0.
 
 ## System of Gauges. LiquidityGauge and GaugeController
 
-In Curve, inflation is going towards users who use it. The usage is measured
+In Mobius, inflation is going towards users who use it. The usage is measured
 with Gauges. Currently there is just _LiquidityGauge_ which measures, how much
 liquidity does the user provide. The same type of gauge can be used to measure
 "liquidity" provided for insurance.
@@ -96,7 +94,7 @@ his LP tokens into the gauge using `deposit()` and can withdraw using `withdraw(
 Coin rates which the gauge is getting depends on current inflation rate,
 and gauge _type weights_ (which get voted on in Aragon). Each user gets
 inflation proportional to his LP tokens locked. Additionally, the rewards
-could be _boosted_ by up to factor of 2.5 if user vote-locks tokens for Curve
+could be _boosted_ by up to factor of 2.5 if user vote-locks tokens for Mobius
 governance in _VotingEscrow_.
 
 The user _does not_ require to periodically check in. We describe how this is
@@ -144,16 +142,16 @@ unchanged for all times between <img src="https://render.githubusercontent.com/r
 In order to incentivize users to participate in governance, and additionally
 create stickiness for liquidity, we implement the following mechanism.
 User's balance counted in the _LiquidityGauge_ gets boosted by users locking
-CRV tokens in _VotingEscrow_, depending on their vote weight <img src="https://render.githubusercontent.com/render/math?math=w_i">:
+MOBI tokens in _VotingEscrow_, depending on their vote weight <img src="https://render.githubusercontent.com/render/math?math=w_i">:
 <img src="https://render.githubusercontent.com/render/math?math=b_u^* = \min\left( 0.4\,b_u + 0.6\,S\frac{w_i}{W},\, b_u \right).">
 The value of <img src="https://render.githubusercontent.com/render/math?math=w_i"> is taken at the time user performs any action (deposit,
-withdrawal, withdrawal of minted CRV tokens) and is applied until the next
+withdrawal, withdrawal of minted MOBI tokens) and is applied until the next
 action this user performs.
 
-If no users vote-lock any CRV (or simply don't have any), the inflation will
+If no users vote-lock any MOBI (or simply don't have any), the inflation will
 simply be distributed proportionally to the liquidity <img src="https://render.githubusercontent.com/render/math?math=b_u"> each one of them
-provided. However, if a user stakes much enough CRV, he is able to boost his
-stream of CRV by up to factor of 2.5 (reducing it slightly for all users who are
+provided. However, if a user stakes much enough MOBI, he is able to boost his
+stream of MOBI by up to factor of 2.5 (reducing it slightly for all users who are
 not doing that).
 
 Implementation details are such that a user gets the boost actual at the time of
@@ -165,13 +163,13 @@ no boost if he/she has no voting power at that point already.
 
 Finally, the gauge is supposed to not miss a full year of inflation (e.g. if
 there were no interactions with the guage for the full year). If that ever
-happens, the abandoned gauge gets less CRV.
+happens, the abandoned gauge gets less MOBI.
 
 ## Weight voting for gauges
 
 Instead of simply voting for weight change in Aragon, users can allocate their
 vote-locked tokens towards one or other Gauge (pool). That pool will be getting
-a fraction of CRV tokens minted proportional to how much vote-locked tokens are
+a fraction of MOBI tokens minted proportional to how much vote-locked tokens are
 allocated to it. Eeach user with tokens in VotingEscrow can change his/her
 preference at any time.
 
@@ -208,7 +206,7 @@ powers to change type weights unilaterally.
 
 Every pool allows the admin to collect fees using `withdraw_admin_fees`. Aragon
 should be able to collect those fees to the admin account and use them to buy
-and burn CRV on a free market once that free market exists.
+and burn MOBI on a free market once that free market exists.
 That should be possible to be done by anyone without a vote.
 
 Instead of burning, there could be different mechanisms working with the same
