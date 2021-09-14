@@ -27,6 +27,7 @@ interface Minter:
     def token() -> address: view
     def controller() -> address: view
     def minted(user: address, gauge: address) -> uint256: view
+    def mint(used: address): nonpayable
 
 interface VotingEscrow:
     def user_point_epoch(addr: address) -> uint256: view

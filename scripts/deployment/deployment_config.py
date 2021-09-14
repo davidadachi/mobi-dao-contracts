@@ -16,7 +16,7 @@ REQUIRED_CONFIRMATIONS = 3
 # Aragon agent address - set after the Aragon DAO is deployed
 ARAGON_AGENT = None
 
-YEAR = 86400 * 365
+YEAR = 86400 * 365 
 
 DECIMAL = 10 ** 18
 

@@ -64,7 +64,7 @@ INITIAL_RATE: constant(uint256) = 274_815_283 * 10 ** 18 / YEAR  # leading to 43
 RATE_REDUCTION_TIME: constant(uint256) = YEAR
 RATE_REDUCTION_COEFFICIENT: constant(uint256) = 1189207115002721024  # 2 ** (1/4) * 1e18
 RATE_DENOMINATOR: constant(uint256) = 10 ** 18
-INFLATION_DELAY: constant(uint256) = 86400
+INFLATION_DELAY: constant(uint256) = 0 #86400
 
 # Supply variables
 mining_epoch: public(int128)

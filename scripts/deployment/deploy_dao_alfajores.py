@@ -3,7 +3,7 @@ import json
 from brownie import (
     ERC20MOBI,
     GaugeController,
-    LiquidityGauge,
+    LiquidityGaugeV3,
     LiquidityGaugeReward,
     Minter,
     PoolProxy,
@@ -58,6 +58,7 @@ def development():
 
 def deploy_part_one(admin, confs=1, deployments_json=None):
     token = ERC20MOBI.deploy("Mobius DAO Token", "MOBI", 18, {"from": admin, "required_confs": confs})
+    token.start_epoch_time_write({"from": admin})
     voting_escrow = VotingEscrow.deploy(
         token,
         "Vote-escrowed MOBI",
@@ -93,14 +94,14 @@ def deploy_part_two(admin, token, voting_escrow, confs=1, deployments_json=None)
         "VotingEscrow": voting_escrow.address,
         "GaugeController": gauge_controller.address,
         "Minter": minter.address,
-        "LiquidityGauge": {},
+        "LiquidityGaugeV3": {},
         "LiquidityGaugeReward": {},
         "PoolProxy": pool_proxy.address,
     }
     for name, (lp_token, weight) in POOL_TOKENS.items():
-        gauge = LiquidityGauge.deploy(lp_token, minter, admin, {"from": admin, "required_confs": confs})
+        gauge = LiquidityGaugeV3.deploy(lp_token, minter, admin, {"from": admin, "required_confs": confs})
         gauge_controller.add_gauge(gauge, 0, weight, {"from": admin, "required_confs": confs})
-        deployments["LiquidityGauge"][name] = gauge.address
+        deployments["LiquidityGaugeV3"][name] = gauge.address
 
     for (name, (lp_token, reward_claim, reward_token, weight)) in REWARD_POOL_TOKENS.items():
         gauge = LiquidityGaugeReward.deploy(
