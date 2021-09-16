@@ -5,7 +5,7 @@ This script holds customizeable / sensetive values related to the DAO deployment
 See `README.md` in this directory for more information on how deployment works.
 """
 
-from brownie import rpc, web3
+from brownie import rpc, web3, accounts
 from web3 import middleware
 from web3.gas_strategies.time_based import fast_gas_price_strategy as gas_strategy
 
@@ -84,7 +84,7 @@ def get_live_admin():
     # Admin and funding admin account objects used for in a live environment
     # May be created via accounts.load(name) or accounts.add(privkey)
     # https://eth-brownie.readthedocs.io/en/stable/account-management.html
-    admin = accounts.load('dev-1')  #
+    admin = accounts.load('kyle_personal')  #
     funding_admins = [admin, admin, admin, admin]
     return admin, funding_admins
 

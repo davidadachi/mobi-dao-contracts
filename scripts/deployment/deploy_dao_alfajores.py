@@ -51,7 +51,7 @@ def live_part_two():
 
 
 def development():
-    accounts.load("dev-1")
+    accounts.load("kyle_personal")
     token, voting_escrow = deploy_part_one(accounts[0])
     deploy_part_two(accounts[0], token, voting_escrow)
 
