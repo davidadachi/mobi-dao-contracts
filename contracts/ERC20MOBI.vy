@@ -51,18 +51,20 @@ YEAR: constant(uint256) = 86400 * 365
 
 # Allocation:
 # =========
-# * shareholders - 30%
-# * emplyees - 3%
-# * DAO-controlled reserve - 5%
-# * Early users - 5%
-# == 43% ==
-# left for inflation: 57%
+# * founders - 20%
+# * DAO-controlled reserve - 30%
+# * Celo Reserve - 5%
+# * Investors - 3%
+# * Ubeswap Incentives - 7.5%
+# * Early users - .5%
+# == 66% ==
+# left for inflation: 34%
 
 # Supply parameters
-INITIAL_SUPPLY: constant(uint256) = 1_000_000_000
+INITIAL_SUPPLY: constant(uint256) = 660_000_000
 INITIAL_RATE: constant(uint256) = 274_815_283 * 10 ** 18 / YEAR  # leading to 43% premine
 RATE_REDUCTION_TIME: constant(uint256) = YEAR
-RATE_REDUCTION_COEFFICIENT: constant(uint256) = 1189207115002721024  # 2 ** (1/4) * 1e18
+RATE_REDUCTION_COEFFICIENT: constant(uint256) = 18181818181818181818  # 100 / 55 = 1.818...
 RATE_DENOMINATOR: constant(uint256) = 10 ** 18
 INFLATION_DELAY: constant(uint256) = 0 #86400
 

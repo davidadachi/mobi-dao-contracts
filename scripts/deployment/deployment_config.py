@@ -5,7 +5,7 @@ This script holds customizeable / sensetive values related to the DAO deployment
 See `README.md` in this directory for more information on how deployment works.
 """
 
-from brownie import rpc, web3
+from brownie import rpc, web3, accounts
 from web3 import middleware
 from web3.gas_strategies.time_based import fast_gas_price_strategy as gas_strategy
 
@@ -23,60 +23,61 @@ DECIMAL = 10 ** 18
 # `VestingEscrow` contracts to be deployed
 STANDARD_ESCROWS = [
     {  # Founder
-        "duration": 1 * YEAR,
+        "duration": 2 * YEAR,
         "can_disable": False,
-        "admin": "0x000000000000000000000000000000000000dead",
+        "admin": "0x16E319d8dAFeF25AAcec0dF0f1E349819D36993c",
         "recipients": {
-            "0x42F21354603C7f4065C40C80c88fA8d0Db4d4EA9": 50_000_000 * DECIMAL,
-            "0x59A6AbC89C158ef88d5872CaB4aC3B08474883D9": 50_000_000 * DECIMAL,
-            "0x6c0d6Fba3bcdb224278474E8d524F19c6BB55850": 50_000_000 * DECIMAL,
-            "0xCD943EE26221AC3e6e7f3e38598F2b08BAEA87DD": 50_000_000 * DECIMAL,
-            "0xE35E97438Fd16593e285546260C8585dea7909Dd": 50_000_000 * DECIMAL,
+            "0x622d8A2DEe6aaf4f00Cc1bC9e74509ce7a18FF7D": 100_000_000 * DECIMAL, # Dahlia multisig
+            "0x4ea77424Da100ac856ece3DDfAbd8B528570Ca0d": 30_000_000 * DECIMAL, # Dylan
+            "0x08b6601066b441510b7546c5412e3AbB8e3a4434": 20_000_000 * DECIMAL, # 0xHuman
+            "0xf617a242B862799D547044f28cC2dB3124c64817": 50_000_000 * DECIMAL, # OpenCelo multisig
         },
     },
     {  # Investors
         "duration": 2 * YEAR,
         "can_disable": False,
-        "admin": "0x000000000000000000000000000000000000dead",
+        "admin": "0x16E319d8dAFeF25AAcec0dF0f1E349819D36993c",
         "recipients": {
-            "0xB811Ad5C016c37d9f40dffA8fc360F9B3fFC0d2A": 1_600_000 * DECIMAL,
-            "0x5314951649f0484884a067034FA57E492D908D42": 1_000_000 * DECIMAL,
+            "0x197d9C534366B77Af02c4Bf5412ECFe69A041622": 18_000_000 * DECIMAL, # Flori
         },
     },
     {  # Advisors and partners with known addresses
         "duration": 2 * YEAR,
-        "can_disable": True,
-        "admin": "0x16E319d8dAFeF25AAcec0dF0f1E349819D36993c",  # Mobius
-        "recipients": {"0xeBC551A91D951875e570da49541d5a8bED469cF8": 2_002402883413584673701465},
-    },
-    {  # Employees
-        "duration": 2 * YEAR,
-        "can_disable": True,
+        "can_disable": False,
         "admin": "0x16E319d8dAFeF25AAcec0dF0f1E349819D36993c",  # Mobius
         "recipients": {
-            "0xBe286d574b1Ea46f54955Bd856821f84DFd20b2e": 30_303030302325581395348837,
-            "0x825AA4A8F72ab6AE0C55D840759711bBe00a9304": 15_151515151162790697674418,
-            "0x94dFcE828c3DAaF6492f1B6F66f9a1825254D24B": 7_878787878604651162790697,
-            "0x6632EdA2685EABFb7B3B45669CFa5441349485d3": 3_030303030232558139534883,
-            "0x0Ac51a4E170bF73e7ac54283E61C9717EAc2A241": 7_878787878604651162790697,
+            "0x5314951649f0484884a067034FA57E492D908D42": 10_000_000 * DECIMAL, # Alex Witt
+            "0xF2d3af8181600faa5C1BEE7398fcE1277a3B049A":  2_000_000 * DECIMAL # Moss
         },
     },
+    # {  # Employees
+    #     "duration": 2 * YEAR,
+    #     "can_disable": True,
+    #     "admin": "0x16E319d8dAFeF25AAcec0dF0f1E349819D36993c",  # Mobius
+    #     "recipients": {
+    #         "0xBe286d574b1Ea46f54955Bd856821f84DFd20b2e": 30_303030302325581395348837,
+    #         "0x825AA4A8F72ab6AE0C55D840759711bBe00a9304": 15_151515151162790697674418,
+    #         "0x94dFcE828c3DAaF6492f1B6F66f9a1825254D24B": 7_878787878604651162790697,
+    #         "0x6632EdA2685EABFb7B3B45669CFa5441349485d3": 3_030303030232558139534883,
+    #         "0x0Ac51a4E170bF73e7ac54283E61C9717EAc2A241": 7_878787878604651162790697,
+    #     },
+    # },
 ]
 
 # `VestingEscrowFactory` contracts to be deployed
 FACTORY_ESCROWS = [
-    {  # Advisors with unknown addresses
-        "admin": "0x16E319d8dAFeF25AAcec0dF0f1E349819D36993c",  # Mobius
-        "amount": 14_016820183895092715910255,
-    },
-    {  # Rest of employee coins
-        "admin": "0x16E319d8dAFeF25AAcec0dF0f1E349819D36993c",  # Mobius
-        "amount": 26_666666666046511627906979,
-    },
-    {  # Community fund
-        "admin": "0x16E319d8dAFeF25AAcec0dF0f1E349819D36993c",  # set to DAO  XXX
-        "amount": 151_515151511627906976744186,
-    },
+    # {  # Advisors with unknown addresses
+    #     "admin": "0x16E319d8dAFeF25AAcec0dF0f1E349819D36993c",  # Mobius
+    #     "amount": 14_016820183895092715910255,
+    # },
+    # {  # Rest of employee coins
+    #     "admin": "0x16E319d8dAFeF25AAcec0dF0f1E349819D36993c",  # Mobius
+    #     "amount": 26_666666666046511627906979,
+    # },
+    # {  # Community fund
+    #     "admin": "0x16E319d8dAFeF25AAcec0dF0f1E349819D36993c",  # set to DAO  XXX
+    #     "amount": 151_515151511627906976744186,
+    # },
 ]
 
 

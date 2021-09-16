@@ -88,7 +88,8 @@ def vest_tokens(admin, token_address, confs):
             f"  {data['contract'].address}: {len(data['recipients'])} recipients, "
             f"{total_amount} total tokens, {data['duration']/YEAR} year lock"
         )
-
+    
+    token.start_epoch_time_write({"from": admin})
     return config.STANDARD_ESCROWS, factory_contracts
 
 

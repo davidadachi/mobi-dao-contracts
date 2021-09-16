@@ -107,6 +107,7 @@ time_total: public(uint256)  # last scheduled time
 
 points_type_weight: public(HashMap[int128, HashMap[uint256, uint256]])  # type_id -> time -> type weight
 time_type_weight: public(uint256[1000000000])  # type_id -> last scheduled time (next week)
+initiated: public(bool)
 
 
 @external
@@ -123,7 +124,7 @@ def __init__(_token: address, _voting_escrow: address):
     self.token = _token
     self.voting_escrow = _voting_escrow
     self.time_total = block.timestamp / WEEK * WEEK
-
+    self.initiated = False
 
 @external
 def commit_transfer_ownership(addr: address):
@@ -304,7 +305,6 @@ def add_gauge(addr: address, gauge_type: int128, weight: uint256 = 0):
 
     self.gauge_types_[addr] = gauge_type + 1
     next_time: uint256 = (block.timestamp + WEEK) / WEEK * WEEK
-    cur_time: uint256 = (block.timestamp) / WEEK * WEEK
 
     if weight > 0:
         _type_weight: uint256 = self._get_type_weight(gauge_type)
@@ -312,14 +312,11 @@ def add_gauge(addr: address, gauge_type: int128, weight: uint256 = 0):
         _old_total: uint256 = self._get_total()
 
         self.points_sum[gauge_type][next_time].bias = weight + _old_sum
-        self.points_sum[gauge_type][cur_time].bias = weight + _old_sum
         self.time_sum[gauge_type] = next_time
         self.points_total[next_time] = _old_total + _type_weight * weight
-        self.points_total[cur_time] = _old_total + _type_weight * weight
         self.time_total = next_time
 
         self.points_weight[addr][next_time].bias = weight
-        self.points_weight[addr][cur_time].bias = weight
 
     if self.time_sum[gauge_type] == 0:
         self.time_sum[gauge_type] = next_time
@@ -412,13 +409,10 @@ def _change_type_weight(type_id: int128, weight: uint256):
     old_sum: uint256 = self._get_sum(type_id)
     _total_weight: uint256 = self._get_total()
     next_time: uint256 = (block.timestamp + WEEK) / WEEK * WEEK
-    current_time: uint256 = (block.timestamp) / WEEK * WEEK
 
     _total_weight = _total_weight + old_sum * weight - old_sum * old_weight
     self.points_total[next_time] = _total_weight
-    self.points_total[current_time] = _total_weight
     self.points_type_weight[type_id][next_time] = weight
-    self.points_type_weight[type_id][current_time] = weight
     self.time_total = next_time
     self.time_type_weight[type_id] = next_time
 
@@ -601,3 +595,20 @@ def get_weights_sum_per_type(type_id: int128) -> uint256:
     @return Sum of gauge weights
     """
     return self.points_sum[type_id][self.time_sum[type_id]].bias
+
+@external
+def initiateForFarming():
+    assert not self.initiated # dev: can only be ran once
+    self.initiated = True
+    next_time: uint256 = (block.timestamp + WEEK) / WEEK * WEEK
+    cur_time: uint256 = (block.timestamp) / WEEK * WEEK
+    self.points_total[cur_time] = self.points_total[next_time]
+    self.points_total[cur_time] = self.points_total[next_time]
+    self.points_type_weight[0][cur_time] = self.points_type_weight[0][next_time]
+    self.points_sum[0][cur_time].bias = self.points_sum[0][next_time].bias
+
+    for gauge in self.gauges:
+        self.points_weight[gauge][cur_time].bias = self.points_weight[gauge][next_time].bias
+    for gauge in self.gauges:
+        self._get_weight(gauge)
+    self._get_total()

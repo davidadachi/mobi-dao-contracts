@@ -58,7 +58,6 @@ def development():
 
 def deploy_part_one(admin, confs=1, deployments_json=None):
     token = ERC20MOBI.deploy("Mobius DAO Token", "MOBI", 18, {"from": admin, "required_confs": confs})
-    token.start_epoch_time_write({"from": admin})
     voting_escrow = VotingEscrow.deploy(
         token,
         "Vote-escrowed MOBI",
