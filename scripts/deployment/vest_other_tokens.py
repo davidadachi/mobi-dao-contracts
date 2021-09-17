@@ -47,9 +47,10 @@ def vest_tokens(admin, token_address, confs):
         factory_contracts.append((factory, data["amount"]))
 
     # deploy standard escrows
-    start_time = token.future_epoch_time_write.call()
+    print('here')
+    start_time = 1631821917
     for data in config.STANDARD_ESCROWS:
-        print(data)
+        print(data, start_time)
         vesting_escrow = VestingEscrow.deploy(
             token,
             start_time,
