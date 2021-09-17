@@ -1,5 +1,9 @@
 {
     "scripts": {
-      "preinstall": "npm i -g ganache-cli@6.12.1"
-    }
-  }
+        "preinstall": "npm i -g ganache-cli@6.12.1"
+    },
+    "dependencies": {
+        "web3-utils": "^1.5.2"
+    },
+    "type": "module"
+}

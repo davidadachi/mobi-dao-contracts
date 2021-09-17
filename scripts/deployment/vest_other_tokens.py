@@ -26,7 +26,7 @@ def development():
     """
     Vest tokens in a development environment and validate the result.
     """
-    accounts.load('dev-1')
+    accounts.load('kyle_personal')
     token = ERC20MOBI.deploy("Mobius DAO Token", "MOBI", 18, {"from": accounts[0]})
     vesting_escrow, vested_amounts = vest_tokens(accounts[0], token, 1)
     sanity_check(token, vesting_escrow, vested_amounts)
@@ -47,9 +47,10 @@ def vest_tokens(admin, token_address, confs):
         factory_contracts.append((factory, data["amount"]))
 
     # deploy standard escrows
-    start_time = token.future_epoch_time_write.call()
+    print('here')
+    start_time = 1631821917
     for data in config.STANDARD_ESCROWS:
-
+        print(data, start_time)
         vesting_escrow = VestingEscrow.deploy(
             token,
             start_time,
