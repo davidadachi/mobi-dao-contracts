@@ -11,11 +11,14 @@ with open(filename, 'r') as csvfile:
     csvreader = csv.reader(csvfile)
     fields = next(csvreader)
     for row in csvreader:
-        sum += float(row[6].replace(',', ''))
-        data.append([row[4], float(row[6].replace(',', ''))])
-    for row in data:
-        print(row[0], row[1]/sum)
-        out.update({row[0]: row[1]/sum})
+        amount = float(row[6].replace(',', ''))
+        if amount > 9.5: 
+            sum += amount
+            data.append([row[4], float(row[6].replace(',', ''))])
+
+for d in data:
+    # print(d[0], d[1]/sum)
+    out.update({d[0]: d[1]/sum})
 
 with open('early-users-mobius.json', 'w+') as f:
     json.dump(out, f)
